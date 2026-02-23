@@ -152,7 +152,7 @@ jobs:
       - name: Save image tag
         run: echo "${{ steps.meta.outputs.tag }}" > image-tag.txt
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: image-tag
           path: ai-agent/image-tag.txt
