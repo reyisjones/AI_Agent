@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/OWNER/ai-agent/security/advisories/new
+    about: >
+      Please report security vulnerabilities via GitHub private advisory,
+      not as a public issue.
+  - name: Question / Discussion
+    url: https://github.com/OWNER/ai-agent/discussions
+    about: Ask questions or discuss ideas here.

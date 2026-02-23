@@ -1,0 +1,86 @@
+name: Feature Request
+description: Propose a new feature or improvement.
+title: "feat: <short description>"
+labels: ["enhancement", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement! Please search
+        [existing issues](../../issues) first to avoid duplicates.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pre-flight checklist
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: This is a single, focused feature — not multiple unrelated ideas.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: >
+        What problem does this feature solve? Describe the pain point without
+        prescribing the solution.
+      placeholder: "Currently, users cannot X because Y, which means they have to Z manually..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: >
+        Describe the feature you'd like. Include any API shape, config options,
+        or behaviour changes.
+      placeholder: "Add a `weather_current` tool that calls OpenWeatherMap and ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: >
+        Any alternative solutions or features you've considered? Why did you
+        prefer your proposed solution?
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Agent core / loop
+        - Tool (existing)
+        - New tool
+        - Memory (short-term / long-term)
+        - Safety / guardrails
+        - API / routing
+        - Observability / logging
+        - Deployment / infrastructure
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: breaking
+    attributes:
+      label: Is this a breaking change?
+      options:
+        - "No"
+        - "Yes — describe in Additional context"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Mock-ups, related issues, external references, etc.
