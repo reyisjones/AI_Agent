@@ -33,8 +33,8 @@ htmlcov/
 .idea/
 *.swp
 
-# Docker
-*.dockerignore
+# Docker build artefacts
+# Note: .dockerignore itself IS tracked (do not add it here)
 
 # Azure
 .azure/
