@@ -1,0 +1,99 @@
+---
+# docker-compose for local development
+# Usage:  docker compose up --build
+#
+# Services:
+#   agent    — FastAPI AI Agent
+#   redis    — Session memory
+#   postgres — Long-term memory
+#   jaeger   — Distributed tracing UI (optional, OTLP)
+
+version: "3.9"
+
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-agent:local
+    container_name: ai-agent
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Required — set in your shell or a .env file
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?OPENAI_API_KEY must be set}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o}
+      APP_ENV: development
+      LOG_LEVEL: INFO
+      # Memory
+      REDIS_URL: redis://redis:6379/0
+      POSTGRES_DSN: postgresql+asyncpg://agent:agentpass@postgres:5432/agentdb
+      # Observability (send to Jaeger)
+      OTLP_ENDPOINT: http://jaeger:4317
+      SERVICE_NAME: ai-agent
+      # Tool policy
+      ALLOWED_HTTP_DOMAINS: httpbin.org,jsonplaceholder.typicode.com,api.openai.com
+      DOCS_PATH: /app/docs/
+    volumes:
+      # Mount docs folder for live edits on local dev
+      - ./docs:/app/docs:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  redis:
+    image: redis:7-alpine
+    container_name: ai-agent-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: ai-agent-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: agentpass
+      POSTGRES_DB: agentdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent -d agentdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    container_name: ai-agent-jaeger
+    restart: unless-stopped
+    ports:
+      - "16686:16686"   # Jaeger UI
+      - "4317:4317"     # OTLP gRPC
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+
+volumes:
+  redis_data:
+  postgres_data:
