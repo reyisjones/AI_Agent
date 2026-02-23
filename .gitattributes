@@ -1,0 +1,51 @@
+# .gitattributes
+# Controls line endings, diff drivers, and export behaviour.
+
+# ── Default: normalise all text files to LF in the repo ─────────────────────
+* text=auto eol=lf
+
+# ── Explicitly text files ────────────────────────────────────────────────────
+*.py        text eol=lf diff=python
+*.md        text eol=lf diff=markdown
+*.rst       text eol=lf
+*.txt       text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.toml      text eol=lf
+*.json      text eol=lf
+*.bicep     text eol=lf
+*.sh        text eol=lf
+
+# ── Windows-specific files should keep CRLF ──────────────────────────────────
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+*.ps1       text eol=crlf
+
+# ── Binary files — never diff / merge ────────────────────────────────────────
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.woff      binary
+*.woff2     binary
+*.ttf       binary
+*.eot       binary
+*.zip       binary
+*.tar.gz    binary
+*.tgz       binary
+*.pyc       binary
+*.pyo       binary
+
+# ── Export-ignore: keep out of source tarballs / GitHub ZIP downloads ────────
+.gitattributes   export-ignore
+.gitignore       export-ignore
+.editorconfig    export-ignore
+.github/         export-ignore
+tests/           export-ignore
+docs/            export-ignore
+
+# ── linguist overrides (GitHub language statistics) ─────────────────────────
+*.bicep          linguist-language=Bicep
+docs/**          linguist-documentation=true
+infra/**         linguist-documentation=false
