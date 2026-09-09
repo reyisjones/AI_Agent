@@ -7,7 +7,7 @@ version: 2
 updates:
   # ── Python dependencies ────────────────────────────────────────────────────
   - package-ecosystem: pip
-    directory: /ai-agent
+    directory: /
     schedule:
       interval: weekly
       day: monday
