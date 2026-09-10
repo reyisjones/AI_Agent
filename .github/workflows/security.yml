@@ -78,7 +78,7 @@ jobs:
         continue-on-error: true   # Report but don't block on first run
 
       - name: Upload audit report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: pip-audit-report
