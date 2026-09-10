@@ -19,7 +19,7 @@ jobs:
     name: Lint & type-check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
@@ -48,7 +48,7 @@ jobs:
       OPENAI_API_KEY: sk-test-00000000000000000000000000000000
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
@@ -81,7 +81,7 @@ jobs:
       OPENAI_API_KEY: sk-test-00000000000000000000000000000000
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         with:
@@ -105,7 +105,7 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Azure login (OIDC)
         uses: azure/login@v2
@@ -153,7 +153,7 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/download-artifact@v7
         with:
