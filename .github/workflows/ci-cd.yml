@@ -136,7 +136,7 @@ jobs:
       - name: Save image tag
         run: echo "${{ steps.meta.outputs.tag }}" > image-tag.txt
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: image-tag
           path: image-tag.txt
